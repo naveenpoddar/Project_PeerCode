@@ -1,0 +1,126 @@
+/* --- Ported from CoderTest styles.css --- */
+:root {
+  --bg-dark: #0f172a;
+  --bg-panel: #1e293b;
+  --primary: #8b5cf6;
+  --secondary: #3b82f6;
+  --accent: #ec4899;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --glow-primary: 0 0 15px rgba(139, 92, 246, 0.6);
+  --glow-accent: 0 0 15px rgba(236, 72, 153, 0.6);
+  --glow-success: 0 0 15px rgba(16, 185, 129, 0.6);
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+.racer-body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  overflow: hidden;
+  height: 100vh;
+  margin: 0;
+}
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
+  z-index: 100;
+}
+
+.arena {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  gap: 1rem;
+  padding: 1rem;
+  height: calc(100vh - 60px);
+}
+
+.panel {
+  background: var(--bg-panel);
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.gamified-race {
+  flex: 1;
+  max-width: 450px;
+  position: relative;
+}
+
+.track-container {
+  flex: 1;
+  position: relative;
+  background: linear-gradient(#1e1e1e, #111);
+  overflow: hidden;
+}
+
+.finish-line {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: repeating-linear-gradient(90deg, #fff, #fff 10px, #000 10px, #000 20px);
+  z-index: 4;
+}
+
+.car {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  transition: bottom 0.5s ease-out;
+}
+
+.car-label {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  background: var(--glass-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.coding-arena {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.editor-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+  position: relative;
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, var(--accent), var(--primary));
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+}
