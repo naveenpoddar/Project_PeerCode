@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { BookOpen, Users, Video, Code, LayoutDashboard, Activity, Terminal, Network, MessageSquare } from 'lucide-react';
+import { BookOpen, Users, Code, Activity, Terminal, Network, Award } from 'lucide-react';
 
 const ThreeBackground = dynamic(() => import('@/components/ThreeBackground'), { ssr: false });
 
@@ -107,12 +107,30 @@ export default function HomePage() {
                   <Users size={28} />
                 </div>
                 <h2>Teacher Portal</h2>
-                <p>Create assignments, deploy AI-assisted grading, and host collaborative classes.</p>
+                <p>Create assignments, deploy AI grading, and host live classes.</p>
                 <ul className="feature-list">
                   <li><span className="f-dot t-dot"></span> Auto-Grade AI</li>
                   <li><span className="f-dot t-dot"></span> Host Live Video</li>
                 </ul>
                 <div className="card-arrow t-arrow">Management →</div>
+              </div>
+            </Link>
+
+            {/* Leaderboard Card */}
+            <Link href="/leaderboard" className="portal-card leaderboard-card">
+              <div className="card-face card-top l-top"></div>
+              <div className="card-face card-side l-side"></div>
+              <div className="card-inner">
+                <div className="card-icon-wrapper leaderboard-icon">
+                  <Award size={28} />
+                </div>
+                <h2>Leaderboard</h2>
+                <p>Compete globally. Track your XP, rise through ranks, and earn badges.</p>
+                <ul className="feature-list">
+                  <li><span className="f-dot l-dot"></span> Global Rankings</li>
+                  <li><span className="f-dot l-dot"></span> Earn Achievements</li>
+                </ul>
+                <div className="card-arrow l-arrow">View Ranks →</div>
               </div>
             </Link>
           </div>
@@ -157,7 +175,7 @@ export default function HomePage() {
         /* 3D Main Scene */
         .main-content {
           flex: 1; display: flex; flex-direction: column; align-items: center;
-          padding: 5rem 2rem; max-width: 1400px; margin: 0 auto; width: 100%;
+          padding: 5rem 2rem; max-width: 1500px; margin: 0 auto; width: 100%;
           position: relative; z-index: 10; perspective: 1800px;
         }
 
@@ -196,7 +214,7 @@ export default function HomePage() {
 
         /* 3D Cards */
         .portal-cards-3d {
-          display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2.5rem; width: 100%; max-width: 1200px;
+          display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; width: 100%;
           transform-style: preserve-3d;
         }
 
@@ -207,72 +225,81 @@ export default function HomePage() {
         }
         
         /* 3D Angles */
-        .student-card { transform: rotateX(15deg) rotateY(-15deg); z-index: 1; }
-        .peer-card     { transform: rotateX(10deg) rotateY(0deg) translateY(-20px); z-index: 3; }
-        .teacher-card { transform: rotateX(15deg) rotateY(15deg); z-index: 2; }
+        .student-card     { transform: rotateX(15deg) rotateY(-20deg); z-index: 1; }
+        .peer-card        { transform: rotateX(10deg) rotateY(-5deg) translateY(-10px); z-index: 3; }
+        .teacher-card     { transform: rotateX(10deg) rotateY(5deg) translateY(-10px); z-index: 4; }
+        .leaderboard-card { transform: rotateX(15deg) rotateY(20deg); z-index: 2; }
         
-        .portal-card:hover { transform: rotateX(0deg) rotateY(0deg) translateZ(50px); z-index: 50; }
+        .portal-card:hover { transform: rotateX(0deg) rotateY(0deg) translateZ(60px); z-index: 50; }
 
         .card-inner {
-          background: rgba(255,255,255,0.85); border: 1px solid #e2e8f0; border-radius: 24px;
-          padding: 2.5rem 2rem; transform: translateZ(20px);
+          background: rgba(255,255,255,0.85); border: 1px solid #e2e8f0; border-radius: 20px;
+          padding: 2rem 1.5rem; transform: translateZ(20px);
           box-shadow: 0 30px 50px -10px rgba(0,0,0,0.1);
           backdrop-filter: blur(12px);
           position: relative; z-index: 2; height: 100%;
           display: flex; flex-direction: column;
         }
-        .peer-card .card-inner { box-shadow: 0 40px 60px -10px rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.3); }
-        .teacher-card .card-inner { box-shadow: 20px 30px 50px -10px rgba(0,0,0,0.1); }
+        .peer-card .card-inner        { box-shadow: 0 40px 60px -10px rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.3); }
+        .teacher-card .card-inner     { box-shadow: 10px 30px 50px -10px rgba(0,0,0,0.1); }
+        .leaderboard-card .card-inner { box-shadow: 20px 40px 60px -10px rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); }
         
         .portal-card:hover .card-inner { box-shadow: 0 30px 80px -15px rgba(0,0,0,0.2); }
 
         /* 3D Edges */
-        .card-face { position: absolute; background: rgba(241, 245, 249, 0.8); border: 1px solid #cbd5e1; border-radius: 24px; }
-        .card-top { top: -12px; left: 0; width: 100%; height: 12px; transform: rotateX(90deg); transform-origin: bottom; border-radius: 24px 24px 0 0; }
-        .card-side { top: 0; left: -12px; width: 12px; height: 100%; transform: rotateY(-90deg); transform-origin: right; border-radius: 24px 0 0 24px; }
+        .card-face { position: absolute; background: rgba(241, 245, 249, 0.8); border: 1px solid #cbd5e1; border-radius: 20px; }
+        .card-top { top: -12px; left: 0; width: 100%; height: 12px; transform: rotateX(90deg); transform-origin: bottom; border-radius: 20px 20px 0 0; }
+        .card-side { top: 0; left: -12px; width: 12px; height: 100%; transform: rotateY(-90deg); transform-origin: right; border-radius: 20px 0 0 20px; }
         
         /* Specific edges based on rotation */
-        .t-top { top: -12px; left: 0; width: 100%; height: 12px; transform: rotateX(90deg); transform-origin: bottom; }
-        .t-side { top: 0; left: auto; right: -12px; width: 12px; height: 100%; transform: rotateY(90deg); transform-origin: left; border-radius: 0 24px 24px 0; }
+        .t-top { top: -8px; height: 8px; }
+        .t-side { display: none; }
         
         .p-top { top: -8px; height: 8px; }
-        .p-side { display: none; } /* Center card */
+        .p-side { display: none; } 
+        
+        .l-top { top: -12px; left: 0; width: 100%; height: 12px; transform: rotateX(90deg); transform-origin: bottom; }
+        .l-side { top: 0; left: auto; right: -12px; width: 12px; height: 100%; transform: rotateY(90deg); transform-origin: left; border-radius: 0 20px 20px 0; }
 
         .card-icon-wrapper {
-          width: 60px; height: 60px; border-radius: 18px;
+          width: 52px; height: 52px; border-radius: 16px;
           display: flex; align-items: center; justify-content: center;
-          margin-bottom: 1.5rem; transform: translateZ(30px);
+          margin-bottom: 1.25rem; transform: translateZ(30px);
           box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        .student-icon { background: linear-gradient(135deg, #3b82f6, #60a5fa); color: white; }
-        .peer-icon    { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: white; }
-        .teacher-icon { background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: white; }
+        .student-icon     { background: linear-gradient(135deg, #3b82f6, #60a5fa); color: white; }
+        .peer-icon        { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: white; }
+        .teacher-icon     { background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: white; }
+        .leaderboard-icon { background: linear-gradient(135deg, #f59e0b, #fbbf24); color: white; }
 
-        .portal-card h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.8rem; transform: translateZ(25px); }
-        .portal-card p { color: #475569; font-size: 0.9rem; line-height: 1.5; margin-bottom: 2rem; flex: 1; font-weight: 500; transform: translateZ(20px); }
+        .portal-card h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.6rem; transform: translateZ(25px); }
+        .portal-card p { color: #475569; font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem; flex: 1; font-weight: 500; transform: translateZ(20px); }
 
-        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem; transform: translateZ(25px); }
-        .feature-list li { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: #1e293b; font-weight: 600; }
+        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; transform: translateZ(25px); }
+        .feature-list li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #1e293b; font-weight: 600; }
         .f-dot { width: 8px; height: 8px; border-radius: 50%; }
         .s-dot { background: #3b82f6; box-shadow: 0 0 8px #3b82f6; }
         .p-dot { background: #06b6d4; box-shadow: 0 0 8px #06b6d4; }
         .t-dot { background: #8b5cf6; box-shadow: 0 0 8px #8b5cf6; }
+        .l-dot { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
 
-        .card-arrow { font-size: 0.9rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; padding-bottom: 0.4rem; border-bottom: 2px solid transparent; transition: all 0.2s; transform: translateZ(30px); width: fit-content; }
+        .card-arrow { font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; padding-bottom: 0.4rem; border-bottom: 2px solid transparent; transition: all 0.2s; transform: translateZ(30px); width: fit-content; }
         .s-arrow { color: #2563eb; }
         .p-arrow { color: #0891b2; }
         .t-arrow { color: #7c3aed; }
+        .l-arrow { color: #d97706; }
         .portal-card:hover .s-arrow { border-color: #2563eb; }
         .portal-card:hover .p-arrow { border-color: #0891b2; }
         .portal-card:hover .t-arrow { border-color: #7c3aed; }
+        .portal-card:hover .l-arrow { border-color: #d97706; }
 
-        @media (max-width: 1024px) {
-          .portal-cards-3d { grid-template-columns: 1fr; gap: 3rem; transform: none; }
+        @media (max-width: 1200px) {
+          .portal-cards-3d { grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 800px; transform: none; }
           .portal-card { transform: none !important; }
-          .data-ribbon-3d { transform: none !important; flex-wrap: wrap; justify-content: center; }
-          .card-side, .card-top, .t-top, .t-side, .p-top { display: none; }
+          .card-side, .card-top, .t-top, .t-side, .p-top, .l-side, .l-top { display: none; }
         }
         @media (max-width: 768px) {
+          .portal-cards-3d { grid-template-columns: 1fr; }
           .hero-section h1 { font-size: 2.5rem; }
           .hero-section p { font-size: 1rem; }
           .navbar { padding: 1.25rem; flex-direction: column; gap: 1rem; }
