@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     const room = await Room.findOneAndUpdate(
       { roomId: roomId.toUpperCase() },
       { roomId: roomId.toUpperCase(), title: title.trim(), createdBy: createdBy.trim() },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
     );
 
     return NextResponse.json(
