@@ -168,6 +168,10 @@ export default function LiveClassRoom(props: {
     sendChatMessage(chatInput.trim()); setChatInput('');
   };
 
+  const handleRaiseHand = () => {
+    sendChatMessage('✋ Raised their hand!');
+  };
+
   if (verifying) return <Spinner text="Connecting to room…" />;
   if (roomNotFound) return <NotFound />;
 
@@ -246,6 +250,11 @@ export default function LiveClassRoom(props: {
                   <h3>No video loaded</h3>
                   <p>Paste a YouTube link above — everyone in this room will see it instantly.</p>
                 </div>
+              )}
+              {isPlayerReady && roomState.videoId && (
+                <button className="raise-hand-btn" onClick={handleRaiseHand}>
+                  ✋ Raise Hand
+                </button>
               )}
             </div>
           </div>
@@ -510,6 +519,34 @@ export default function LiveClassRoom(props: {
         .player-overlay p { font-size: 0.85rem; line-height: 1.6; max-width: 280px; }
         .player-overlay h3 { color: rgba(255,255,255,0.8); font-size: 1.05rem; font-weight: 600; }
         .empty-icon { color: #ef4444; margin-bottom: 0.25rem; }
+
+        .raise-hand-btn {
+          position: absolute;
+          bottom: 1.5rem;
+          right: 1.5rem;
+          background: rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          color: white;
+          padding: 0.6rem 1.25rem;
+          border-radius: 99px;
+          font-size: 0.95rem;
+          font-weight: 600;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          transition: all 0.2s ease;
+          z-index: 10;
+        }
+        .raise-hand-btn:hover {
+          background: rgba(255, 255, 255, 0.3);
+          transform: translateY(-2px);
+        }
+        .raise-hand-btn:active {
+          transform: translateY(0);
+        }
 
         .info-strip {
           display: flex;
