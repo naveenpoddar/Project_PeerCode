@@ -32,20 +32,20 @@ const liveSessions = [
   {
     id: 1,
     title: "Practice DSA in Java with OOP Concepts",
-    image:
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop",
+    yt: "https://www.youtube.com/watch?v=RBSGKlAvoiM"
   },
   {
     id: 2,
     title: "Advanced System Design Patterns",
-    image:
-      "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1600&auto=format&fit=crop",
+    yt: "https://www.youtube.com/watch?v=m87S6SDBE84"
   },
   {
     id: 3,
     title: "Frontend Optimization Deep Dive",
-    image:
-      "https://images.unsplash.com/photo-1550063873-ab792950096b?q=80&w=1600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1550063873-ab792950096b?q=80&w=1600&auto=format&fit=crop",
+    yt: "https://www.youtube.com/watch?v=Fj-wW6v5LIs"
   },
 ];
 
@@ -110,7 +110,10 @@ export default function ActivitySidebar() {
           {liveSessions.map((session) => (
             <Link 
               key={session.id} 
-              href="/live-class"
+              href={{
+                pathname: "/live-class",
+                query: { title: session.title, track: session.yt }
+              }}
               className="group"
             >
               <div

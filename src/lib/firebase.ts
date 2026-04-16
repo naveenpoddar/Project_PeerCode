@@ -31,10 +31,10 @@ export const generateRoomCode = (): string => {
   return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
 };
 
-export const createRoom = async (roomId: string, creatorName: string) => {
+export const createRoom = async (roomId: string, creatorName: string, videoId: string = '') => {
   const roomRef = ref(database, `live-rooms/${roomId}`);
   await set(roomRef, {
-    videoId: '',
+    videoId: videoId,
     isPlaying: false,
     currentTime: 0,
     lastUpdated: Date.now(),
