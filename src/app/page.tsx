@@ -15,7 +15,7 @@ export default function Dashboard() {
     <main className="min-h-screen bg-white">
       {/* Navbar is kept as per previous request for stats/streaks */}
       <Navbar onOpenLeaderboard={() => setIsLeaderboardOpen(true)} />
-      
+
       <div className="dashboard-container">
         {/* Left Section: Profile & GitHub */}
         <div className="sidebar-left">

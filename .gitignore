@@ -19,7 +19,7 @@
 
 # production
 /build
-
+/whatch-matcher
 # misc
 .DS_Store
 *.pem
