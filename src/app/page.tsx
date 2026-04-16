@@ -1,15 +1,16 @@
+'use client';
+
 import Link from 'next/link';
-import { BookOpen, Users, Video, Code, LayoutDashboard, TrendingUp, Activity, Terminal } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import { BookOpen, Users, Video, Code, LayoutDashboard, Activity, Terminal, Network, MessageSquare } from 'lucide-react';
+
+const ThreeBackground = dynamic(() => import('@/components/ThreeBackground'), { ssr: false });
 
 export default function HomePage() {
   return (
     <div className="home-root">
-      {/* 3D Ambient Light Background Elements */}
-      <div className="bg-orbs">
-        <div className="orb orb-t"></div>
-        <div className="orb orb-r"></div>
-        <div className="orb orb-b"></div>
-      </div>
+      {/* 3D Animated Background */}
+      <ThreeBackground />
 
       <nav className="navbar">
         <div className="logo-section">
@@ -29,7 +30,7 @@ export default function HomePage() {
         <div className="scene-3d">
           
           <div className="hero-section floating">
-            <h1>The modern platform for<br /><span className="text-gradient">3D interactive learning.</span></h1>
+            <h1>The modern platform for<br /><span className="text-gradient">infinite interactive learning.</span></h1>
             <p>Step into the future of education. PeerCode delivers physical-feeling, interactive dashboards, synced video collaborative classes, and instant code assessments.</p>
           </div>
 
@@ -63,20 +64,37 @@ export default function HomePage() {
           <div className="portal-cards-3d">
             {/* Student Portal Card */}
             <Link href="/dashboard/student" className="portal-card student-card">
-              <div className="card-face card-top"></div>
-              <div className="card-face card-side"></div>
+              <div className="card-face card-top s-top"></div>
+              <div className="card-face card-side s-side"></div>
               <div className="card-inner">
                 <div className="card-icon-wrapper student-icon">
-                  <BookOpen size={32} />
+                  <BookOpen size={28} />
                 </div>
                 <h2>Student Portal</h2>
-                <p>Track your learning progress, complete assignments seamlessly, check grades, and join live classes.</p>
+                <p>Track your learning progress, complete assignments seamlessly, and check grades.</p>
                 <ul className="feature-list">
                   <li><span className="f-dot s-dot"></span> Analytics Dashboard</li>
                   <li><span className="f-dot s-dot"></span> Advanced Code Runner</li>
-                  <li><span className="f-dot s-dot"></span> Join Live Interactive Classes</li>
                 </ul>
-                <div className="card-arrow s-arrow">Launch Student Environment →</div>
+                <div className="card-arrow s-arrow">Launch Space →</div>
+              </div>
+            </Link>
+
+            {/* Peer-to-Peer Coding Card */}
+            <Link href="/live-class" className="portal-card peer-card">
+              <div className="card-face card-top p-top"></div>
+              <div className="card-face card-side p-side"></div>
+              <div className="card-inner">
+                <div className="card-icon-wrapper peer-icon">
+                  <Network size={28} />
+                </div>
+                <h2>Peer-to-Peer</h2>
+                <p>Collaborate in real-time. Join pair-programming sessions and synced whiteboards.</p>
+                <ul className="feature-list">
+                  <li><span className="f-dot p-dot"></span> Real-time P2P Sync</li>
+                  <li><span className="f-dot p-dot"></span> Multiplayer Editor</li>
+                </ul>
+                <div className="card-arrow p-arrow">Find Peers →</div>
               </div>
             </Link>
 
@@ -86,16 +104,15 @@ export default function HomePage() {
               <div className="card-face card-side t-side"></div>
               <div className="card-inner">
                 <div className="card-icon-wrapper teacher-icon">
-                  <Users size={32} />
+                  <Users size={28} />
                 </div>
                 <h2>Teacher Portal</h2>
-                <p>Create assignments, deploy AI-assisted grading, and host highly synchronized video lectures.</p>
+                <p>Create assignments, deploy AI-assisted grading, and host collaborative classes.</p>
                 <ul className="feature-list">
-                  <li><span className="f-dot t-dot"></span> Class Insights & AI Reports</li>
-                  <li><span className="f-dot t-dot"></span> Auto-Grade Assignments</li>
-                  <li><span className="f-dot t-dot"></span> Host Live 3D Classes</li>
+                  <li><span className="f-dot t-dot"></span> Auto-Grade AI</li>
+                  <li><span className="f-dot t-dot"></span> Host Live Video</li>
                 </ul>
-                <div className="card-arrow t-arrow">Launch Teacher Environment →</div>
+                <div className="card-arrow t-arrow">Management →</div>
               </div>
             </Link>
           </div>
@@ -108,7 +125,7 @@ export default function HomePage() {
         
         .home-root {
           min-height: 100vh;
-          background: #f1f5f9; /* Light Theme Background */
+          background: transparent;
           color: #0f172a;
           font-family: 'Inter', system-ui, sans-serif;
           display: flex;
@@ -117,19 +134,11 @@ export default function HomePage() {
           position: relative;
         }
 
-        /* Ambient 3D Lights */
-        .bg-orbs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
-        .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.6; animation: drift 15s infinite alternate ease-in-out; }
-        .orb-t { width: 600px; height: 600px; background: #e0e7ff; top: -200px; left: -100px; }
-        .orb-r { width: 500px; height: 500px; background: #fce7f3; top: 20%; right: -150px; animation-delay: -5s; }
-        .orb-b { width: 700px; height: 700px; background: #e0f2fe; bottom: -200px; left: 20%; animation-delay: -10s; }
-        @keyframes drift { 100% { transform: translate(50px, 50px) scale(1.1); } }
-
         /* Navbar */
         .navbar {
           display: flex; align-items: center; justify-content: space-between;
           padding: 1.5rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.5);
-          background: rgba(255,255,255,0.7); backdrop-filter: blur(20px);
+          background: rgba(255,255,255,0.2); backdrop-filter: blur(12px);
           position: sticky; top: 0; z-index: 50; box-shadow: 0 4px 30px rgba(0,0,0,0.03);
         }
         .logo-section { display: flex; align-items: center; gap: 0.75rem; }
@@ -149,7 +158,7 @@ export default function HomePage() {
         .main-content {
           flex: 1; display: flex; flex-direction: column; align-items: center;
           padding: 5rem 2rem; max-width: 1400px; margin: 0 auto; width: 100%;
-          position: relative; z-index: 10; perspective: 1500px;
+          position: relative; z-index: 10; perspective: 1800px;
         }
 
         .scene-3d {
@@ -162,14 +171,14 @@ export default function HomePage() {
         @keyframes floatY { 0%, 100% { transform: translateZ(20px) translateY(0); } 50% { transform: translateZ(20px) translateY(-15px); } }
 
         .hero-section { text-align: center; margin-bottom: 4rem; max-width: 800px; }
-        .hero-section h1 { font-size: 4.5rem; line-height: 1.1; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 1.5rem; color: #0f172a; text-shadow: 0 10px 30px rgba(79,70,229,0.1); }
-        .hero-section p { font-size: 1.25rem; color: #475569; line-height: 1.6; font-weight: 500; }
+        .hero-section h1 { font-size: 4.5rem; line-height: 1.1; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 1.5rem; color: #0f172a; text-shadow: 0 10px 30px rgba(255,255,255,0.8); }
+        .hero-section p { font-size: 1.25rem; color: #475569; line-height: 1.6; font-weight: 500; text-shadow: 0 5px 15px rgba(255,255,255,1); }
 
         /* 3D Data Ribbon */
         .data-ribbon-3d {
-          display: flex; align-items: center; gap: 2rem; background: rgba(255,255,255,0.9);
+          display: flex; align-items: center; gap: 2rem; background: rgba(255,255,255,0.7);
           padding: 1rem 3rem; border-radius: 20px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
-          border: 1px solid rgba(255,255,255,1); backdrop-filter: blur(10px);
+          border: 1px solid rgba(255,255,255,0.8); backdrop-filter: blur(10px);
           margin-bottom: 6rem;
           transform: rotateX(10deg) translateZ(40px); transform-style: preserve-3d;
           transition: transform 0.5s;
@@ -183,73 +192,85 @@ export default function HomePage() {
         .d-info { display: flex; flex-direction: column; }
         .d-label { font-size: 0.8rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
         .d-val { font-size: 1.4rem; font-weight: 800; color: #0f172a; font-family: 'SF Mono', monospace; }
-        .data-separator { width: 1px; height: 40px; background: #e2e8f0; }
+        .data-separator { width: 1px; height: 40px; background: #cbd5e1; }
 
         /* 3D Cards */
         .portal-cards-3d {
-          display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; width: 100%; max-width: 1000px;
+          display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2.5rem; width: 100%; max-width: 1200px;
           transform-style: preserve-3d;
         }
 
         .portal-card {
           position: relative; text-decoration: none; color: #0f172a;
           transform-style: preserve-3d;
-          transform: rotateX(15deg) rotateY(-10deg);
           transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        .teacher-card { transform: rotateX(15deg) rotateY(10deg); }
         
-        .portal-card:hover { transform: rotateX(0deg) rotateY(0deg) translateZ(50px); }
+        /* 3D Angles */
+        .student-card { transform: rotateX(15deg) rotateY(-15deg); z-index: 1; }
+        .peer-card     { transform: rotateX(10deg) rotateY(0deg) translateY(-20px); z-index: 3; }
+        .teacher-card { transform: rotateX(15deg) rotateY(15deg); z-index: 2; }
+        
+        .portal-card:hover { transform: rotateX(0deg) rotateY(0deg) translateZ(50px); z-index: 50; }
 
         .card-inner {
-          background: rgba(255,255,255,0.95); border: 1px solid #e2e8f0; border-radius: 24px;
-          padding: 3.5rem 3rem; transform: translateZ(20px);
-          box-shadow: -20px 30px 50px -10px rgba(0,0,0,0.15);
-          backdrop-filter: blur(10px);
+          background: rgba(255,255,255,0.85); border: 1px solid #e2e8f0; border-radius: 24px;
+          padding: 2.5rem 2rem; transform: translateZ(20px);
+          box-shadow: 0 30px 50px -10px rgba(0,0,0,0.1);
+          backdrop-filter: blur(12px);
           position: relative; z-index: 2; height: 100%;
           display: flex; flex-direction: column;
         }
-        .teacher-card .card-inner { box-shadow: 20px 30px 50px -10px rgba(0,0,0,0.15); }
+        .peer-card .card-inner { box-shadow: 0 40px 60px -10px rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.3); }
+        .teacher-card .card-inner { box-shadow: 20px 30px 50px -10px rgba(0,0,0,0.1); }
         
-        .portal-card:hover .card-inner { box-shadow: 0 30px 60px -15px rgba(0,0,0,0.2); }
+        .portal-card:hover .card-inner { box-shadow: 0 30px 80px -15px rgba(0,0,0,0.2); }
 
         /* 3D Edges */
-        .card-face { position: absolute; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 24px; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); }
-        .card-top { top: -15px; left: 0; width: 100%; height: 15px; transform: rotateX(90deg); transform-origin: bottom; border-radius: 24px 24px 0 0; }
-        .card-side { top: 0; left: -15px; width: 15px; height: 100%; transform: rotateY(-90deg); transform-origin: right; border-radius: 24px 0 0 24px; }
+        .card-face { position: absolute; background: rgba(241, 245, 249, 0.8); border: 1px solid #cbd5e1; border-radius: 24px; }
+        .card-top { top: -12px; left: 0; width: 100%; height: 12px; transform: rotateX(90deg); transform-origin: bottom; border-radius: 24px 24px 0 0; }
+        .card-side { top: 0; left: -12px; width: 12px; height: 100%; transform: rotateY(-90deg); transform-origin: right; border-radius: 24px 0 0 24px; }
         
-        .t-top { top: -15px; left: 0; width: 100%; height: 15px; transform: rotateX(90deg); transform-origin: bottom; border-radius: 24px 24px 0 0; }
-        .t-side { top: 0; left: auto; right: -15px; width: 15px; height: 100%; transform: rotateY(90deg); transform-origin: left; border-radius: 0 24px 24px 0; }
+        /* Specific edges based on rotation */
+        .t-top { top: -12px; left: 0; width: 100%; height: 12px; transform: rotateX(90deg); transform-origin: bottom; }
+        .t-side { top: 0; left: auto; right: -12px; width: 12px; height: 100%; transform: rotateY(90deg); transform-origin: left; border-radius: 0 24px 24px 0; }
+        
+        .p-top { top: -8px; height: 8px; }
+        .p-side { display: none; } /* Center card */
 
         .card-icon-wrapper {
-          width: 72px; height: 72px; border-radius: 20px;
+          width: 60px; height: 60px; border-radius: 18px;
           display: flex; align-items: center; justify-content: center;
-          margin-bottom: 2rem; transform: translateZ(30px);
+          margin-bottom: 1.5rem; transform: translateZ(30px);
           box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         .student-icon { background: linear-gradient(135deg, #3b82f6, #60a5fa); color: white; }
+        .peer-icon    { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: white; }
         .teacher-icon { background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: white; }
 
-        .portal-card h2 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; transform: translateZ(25px); }
-        .portal-card p { color: #475569; font-size: 1rem; line-height: 1.6; margin-bottom: 2.5rem; flex: 1; font-weight: 500; transform: translateZ(20px); }
+        .portal-card h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.8rem; transform: translateZ(25px); }
+        .portal-card p { color: #475569; font-size: 0.9rem; line-height: 1.5; margin-bottom: 2rem; flex: 1; font-weight: 500; transform: translateZ(20px); }
 
-        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-bottom: 3rem; transform: translateZ(25px); }
-        .feature-list li { display: flex; align-items: center; gap: 0.75rem; font-size: 0.95rem; color: #1e293b; font-weight: 600; }
+        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem; transform: translateZ(25px); }
+        .feature-list li { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: #1e293b; font-weight: 600; }
         .f-dot { width: 8px; height: 8px; border-radius: 50%; }
         .s-dot { background: #3b82f6; box-shadow: 0 0 8px #3b82f6; }
+        .p-dot { background: #06b6d4; box-shadow: 0 0 8px #06b6d4; }
         .t-dot { background: #8b5cf6; box-shadow: 0 0 8px #8b5cf6; }
 
-        .card-arrow { font-size: 1rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid transparent; transition: all 0.2s; transform: translateZ(30px); width: fit-content; }
+        .card-arrow { font-size: 0.9rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; padding-bottom: 0.4rem; border-bottom: 2px solid transparent; transition: all 0.2s; transform: translateZ(30px); width: fit-content; }
         .s-arrow { color: #2563eb; }
+        .p-arrow { color: #0891b2; }
         .t-arrow { color: #7c3aed; }
         .portal-card:hover .s-arrow { border-color: #2563eb; }
+        .portal-card:hover .p-arrow { border-color: #0891b2; }
         .portal-card:hover .t-arrow { border-color: #7c3aed; }
 
         @media (max-width: 1024px) {
           .portal-cards-3d { grid-template-columns: 1fr; gap: 3rem; transform: none; }
           .portal-card { transform: none !important; }
           .data-ribbon-3d { transform: none !important; flex-wrap: wrap; justify-content: center; }
-          .card-side, .card-top, .t-top, .t-side { display: none; }
+          .card-side, .card-top, .t-top, .t-side, .p-top { display: none; }
         }
         @media (max-width: 768px) {
           .hero-section h1 { font-size: 2.5rem; }
