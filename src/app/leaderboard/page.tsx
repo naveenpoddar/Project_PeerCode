@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { AreaChart, Area, XAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 import { ArrowLeft, Trophy, Flame, Star, Award, Zap } from 'lucide-react';
+import BlackholeBackground from '@/components/BlackholeBackground';
 
 // --- Dummy Data ---
 const topThree = [
@@ -33,10 +34,7 @@ export default function LeaderboardPage() {
   return (
     <div className="lb-root">
       {/* Dynamic Background */}
-      <div className="bg-orbs">
-        <div className="orb orb-1"></div>
-        <div className="orb orb-2"></div>
-      </div>
+      <BlackholeBackground />
 
       <nav className="lb-nav">
         <Link href="/" className="back-link">
