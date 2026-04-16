@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ChevronLeft, ChevronRight, PlayCircle } from "lucide-react";
+import Link from "next/link";
 
 const calendarData = [
   { day: 1, activity: 20 },
@@ -107,44 +108,49 @@ export default function ActivitySidebar() {
 
         <div className="flex flex-col gap-8 pr-1 custom-scrollbar pb-8">
           {liveSessions.map((session) => (
-            <div
-              key={session.id}
-              className="bg-white rounded-[24px] overflow-hidden shadow-lg border border-gray-100 flex flex-col group shrink-0"
+            <Link 
+              key={session.id} 
+              href="/live-class"
+              className="group"
             >
-              {/* Image Header - 16:9 Aspect Ratio */}
-              <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
-                <img
-                  src={session.image}
-                  alt={session.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-
-                {/* Minimal LIVE Badge */}
-                <div className="absolute top-4 right-4 bg-red-500 text-[8px] font-black px-2 py-1 rounded-md text-white tracking-widest shadow-xl flex items-center gap-1.5 animate-pulse">
-                  <div className="w-1 h-1 bg-white rounded-full"></div>
-                  LIVE
-                </div>
-              </div>
-
-              <div className="p-5 flex flex-col gap-5">
-                <div>
-                  <h4 className="font-bold text-gray-900 text-sm leading-tight line-clamp-2">
-                    {session.title}
-                  </h4>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase mt-2 tracking-widest">
-                    Ongoing Session
-                  </p>
-                </div>
-
-                <button className="w-full bg-[#ff3d3d] hover:bg-red-600 text-white font-bold py-3.5 rounded-2xl text-[9px] tracking-widest transition-all shadow-lg shadow-red-100 flex items-center justify-center gap-2 group">
-                  JOIN LIVE CLASS
-                  <PlayCircle
-                    size={14}
-                    className="group-hover:translate-x-1 transition-transform"
+              <div
+                className="bg-white rounded-[24px] overflow-hidden shadow-lg border border-gray-100 flex flex-col group shrink-0 transition-all hover:shadow-xl hover:border-indigo-100"
+              >
+                {/* Image Header - 16:9 Aspect Ratio */}
+                <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
+                  <img
+                    src={session.image}
+                    alt={session.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                </button>
+
+                  {/* Minimal LIVE Badge */}
+                  <div className="absolute top-4 right-4 bg-red-500 text-[8px] font-black px-2 py-1 rounded-md text-white tracking-widest shadow-xl flex items-center gap-1.5 animate-pulse">
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                    LIVE
+                  </div>
+                </div>
+
+                <div className="p-5 flex flex-col gap-5">
+                  <div>
+                    <h4 className="font-bold text-gray-900 text-sm leading-tight line-clamp-2">
+                      {session.title}
+                    </h4>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase mt-2 tracking-widest">
+                      Ongoing Session
+                    </p>
+                  </div>
+
+                  <div className="w-full bg-[#ff3d3d] group-hover:bg-red-600 text-white font-bold py-3.5 rounded-2xl text-[9px] tracking-widest transition-all shadow-lg shadow-red-100 flex items-center justify-center gap-2">
+                    JOIN LIVE CLASS
+                    <PlayCircle
+                      size={14}
+                      className="group-hover:translate-x-1 transition-transform"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
