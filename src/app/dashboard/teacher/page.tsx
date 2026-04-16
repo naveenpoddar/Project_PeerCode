@@ -30,6 +30,7 @@ export default function TeacherDashboard() {
         <nav className="side-nav">
           <Link href="/dashboard/teacher" className="nav-item active">Overview</Link>
           <Link href="/leaderboard" className="nav-item">Leaderboard</Link>
+          <Link href="/dashboard/teacher/planner" className="nav-item">Course Planner</Link>
           <Link href="/assignments" className="nav-item">Manage Assignments</Link>
           <Link href="/live-class" className="nav-item">Host Live Class</Link>
         </nav>
