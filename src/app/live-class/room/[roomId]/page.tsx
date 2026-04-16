@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { useParams, useSearchParams } from 'next/navigation';
+import { useState, useEffect, useRef, useCallback, use } from 'react';
+import { useRouter } from 'next/navigation';
 import { checkRoomExists } from '@/lib/firebase';
 import useRoomSync, { type YTPlayerHandle } from '@/hooks/useRoomSync';
 
@@ -41,12 +41,16 @@ declare global {
   }
 }
 
-// ─── Component ───────────────────────────────────────────────────────────────
-export default function LiveClassRoom() {
-  const params = useParams();
-  const searchParams = useSearchParams();
-  const roomId = params.roomId as string;
-  const userName = searchParams.get('name') || 'Guest';
+
+export default function LiveClassRoom(props: {
+  params: Promise<{ roomId: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = use(props.params);
+  const searchParams = use(props.searchParams);
+  const roomId = params.roomId;
+  const nameParam = searchParams.name;
+  const userName = (typeof nameParam === 'string' ? nameParam : 'Guest') || 'Guest';
 
   const [verifying, setVerifying] = useState(true);
   const [roomNotFound, setRoomNotFound] = useState(false);
