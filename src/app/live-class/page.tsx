@@ -7,6 +7,7 @@ import { createRoom, generateRoomCode, checkRoomExists } from '@/lib/firebase';
 export default function LiveClassPage() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
+  const [roomTitle, setRoomTitle] = useState('');
   const [joinCode, setJoinCode] = useState('');
   const [tab, setTab] = useState<'create' | 'join'>('create');
   const [loading, setLoading] = useState(false);
@@ -14,11 +15,23 @@ export default function LiveClassPage() {
 
   const handleCreate = async () => {
     if (!userName.trim()) { setError('Please enter your name'); return; }
+    if (!roomTitle.trim()) { setError('Please enter a room title'); return; }
     setError('');
     setLoading(true);
     try {
       const code = generateRoomCode();
+      // 1. Create the Firebase room (for real-time sync)
       await createRoom(code, userName.trim());
+      // 2. Persist room metadata to MongoDB via API
+      await fetch('/api/rooms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          roomId: code,
+          title: roomTitle.trim(),
+          createdBy: userName.trim(),
+        }),
+      });
       router.push(`/live-class/room/${code}?name=${encodeURIComponent(userName.trim())}`);
     } catch (e) {
       setError('Failed to create room. Try again.');
@@ -90,6 +103,21 @@ export default function LiveClassPage() {
               onKeyDown={(e) => e.key === 'Enter' && (tab === 'create' ? handleCreate() : handleJoin())}
             />
           </div>
+
+          {tab === 'create' && (
+            <div className="form-group">
+              <label htmlFor="roomTitle">Room Title</label>
+              <input
+                id="roomTitle"
+                type="text"
+                placeholder="E.g. React Hooks Deep Dive"
+                value={roomTitle}
+                onChange={(e) => setRoomTitle(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+                maxLength={120}
+              />
+            </div>
+          )}
 
           {tab === 'join' && (
             <div className="form-group">
