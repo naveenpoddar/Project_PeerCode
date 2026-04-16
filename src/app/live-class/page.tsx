@@ -1,17 +1,34 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { createRoom, generateRoomCode, checkRoomExists } from '@/lib/firebase';
 
-export default function LiveClassPage() {
+function LobbyForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // Get initial values from query params
+  const initialTitle = searchParams.get('title') || '';
+  const initialTrack = searchParams.get('track') || '';
+
   const [userName, setUserName] = useState('');
-  const [roomTitle, setRoomTitle] = useState('');
+  const [roomTitle, setRoomTitle] = useState(initialTitle);
   const [joinCode, setJoinCode] = useState('');
   const [tab, setTab] = useState<'create' | 'join'>('create');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Update roomTitle if initialTitle changes
+  useEffect(() => {
+    if (initialTitle) setRoomTitle(initialTitle);
+  }, [initialTitle]);
+
+  const extractVideoId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : '';
+  };
 
   const handleCreate = async () => {
     if (!userName.trim()) { setError('Please enter your name'); return; }
@@ -19,13 +36,18 @@ export default function LiveClassPage() {
     setError('');
     setLoading(true);
     try {
+      const videoId = initialTrack ? extractVideoId(initialTrack) : '';
       const code = generateRoomCode();
-      await createRoom(code, userName.trim());
+      
+      // Pass videoId to firebase room creation
+      await createRoom(code, userName.trim(), videoId);
+      
       await fetch('/api/rooms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ roomId: code, title: roomTitle.trim(), createdBy: userName.trim() }),
       });
+      
       router.push(`/live-class/room/${code}?name=${encodeURIComponent(userName.trim())}`);
     } catch {
       setError('Failed to create room. Try again.');
@@ -112,10 +134,12 @@ export default function LiveClassPage() {
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && (tab === 'create' ? handleCreate() : handleJoin())}
+                autoFocus
               />
             </div>
 
-            {tab === 'create' && (
+            {/* Room title is pre-filled and hidden if provided via query */}
+            {tab === 'create' && !initialTitle && (
               <div className="field">
                 <label htmlFor="roomTitle">Room title</label>
                 <input
@@ -401,5 +425,13 @@ export default function LiveClassPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function LiveClassPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LobbyForm />
+    </Suspense>
   );
 }
